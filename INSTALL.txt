@@ -5,6 +5,7 @@ Updated:    22nd July 2016
 
 
 The following steps are required to install xTests:
+ (Please see below if your project uses CMake.)
 
     1. Download the latest distribution of xTests, from
        http://xtests.org/
@@ -40,5 +41,26 @@ The following steps are required to install xTests:
 
 NOTE: xTests depends on the (header-only) STLSoft libraries - version
   1.9.128 or later - available from http://www.stlsoft.org/.
+
+ CMake Users
+ If your project uses CMake (https://cmake.org/) as its build tool,
+ you can install xTests as you would any other CMake project:
+ 1. cd xTests
+ 2. mkdir build && cd build
+ 3. cmake .. -DCMAKE_INSTALL_PREFIX=<dir_to_install_if_wanted>
+ (3. make install)
+ Installing xTests is not necessary for using it.
+
+ When using xTests in your own project, add these rows to your CMakeLists.txt:
+ find_package(xTests <version> REQUIRED)
+ include_directories (${xTests_INCLUDE_DIRS})
+
+ If you ran 'cmake' as stated above, then the location of xTests is
+ automatically known to CMake.
+ (Cached in User's home directory; ~/.cmake/packages/xTests/ in Unix).
+
+ Exported library target is 'xTests::xTests'.
+ Specify it with:
+ 'target_link_libraries(<your target> xTests::xTests)'
 
 =============================== End of file ================================
