@@ -63,4 +63,7 @@ NOTE: xTests depends on the (header-only) STLSoft libraries - version
  Specify it with:
  'target_link_libraries(<your target> xTests::xTests)'
 
+ To compile and run the unit tests: make tests && "make test"
+ To compile the examples: make examples
+
 =============================== End of file ================================
