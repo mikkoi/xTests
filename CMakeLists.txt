@@ -16,6 +16,9 @@ add_subdirectory (src)
 # build target 'tests' for tests.
 add_subdirectory (test EXCLUDE_FROM_ALL)
 
+# build target 'examples' for examples.
+add_subdirectory (examples EXCLUDE_FROM_ALL)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE ON)
 
