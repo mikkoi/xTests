@@ -71,3 +71,7 @@ xtests-0.*-doc.chm
 *.vcproj*.user
 *.vcxproj*.user
 
+# CMake build directories (here alternatives cmake-build and build-cmake)
+/cmake-build
+/build-cmake
+
