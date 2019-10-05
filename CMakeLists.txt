@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+if(POLICY CMP0074)
+    cmake_policy(SET CMP0074 NEW) # Use <PackageName>_ROOT variables
+endif()
 project(xTests
     DESCRIPTION "Simple, easy-to-use, efficient testing library, for C, C++. It's not particularly great, but it's small and portable enough to be bundled with other, more important, libraries."
     LANGUAGES C CXX)
@@ -43,6 +46,14 @@ set(CMAKE_CXX_EXTENSIONS ON)
 # Assuming test library will always be linked statically.
 set( BUILD_SHARED_LIBS FALSE )
 
+# #########################################################
+# Preparations for installing
+
+# Provides install directory variables as defined by the GNU Coding Standards.
+include(GNUInstallDirs)
+
+# Build
+
 find_package(STLSoft 1.9.125 REQUIRED)
 
 add_subdirectory(src)
@@ -61,10 +72,7 @@ add_subdirectory(examples)
 # #########################################################
 # Export and install the project
 
-# Provides install directory variables as defined by the GNU Coding Standards.
-include(GNUInstallDirs)
-
-set(EXPORT_NAME ${PROJECT_NAME})
+string(TOLOWER ${PROJECT_NAME} EXPORT_NAME)
 
 # Prepare a config and config-version files
 include(CMakePackageConfigHelpers)
@@ -81,20 +89,19 @@ write_basic_package_version_file(
 
 export(EXPORT project-targets
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-targets.cmake"
-  NAMESPACE "{$EXPORT_NAME}::"
+    NAMESPACE "${PROJECT_NAME}::"
 )
 
 # Install to GNU type subdirs under CMAKE_INSTALL_PREFIX
 install(EXPORT project-targets
-  NAMESPACE "${EXPORT_NAME}::"
-  FILE "${EXPORT_NAME}-targets.cmake"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
+    NAMESPACE "${PROJECT_NAME}::"
+    FILE "${EXPORT_NAME}-targets.cmake"
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
 )
-install(
-  FILES
+install( FILES
     "${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
 )
 
 # Store the current build directory in the CMake
@@ -102,7 +109,7 @@ install(
 # This helps dependent projects use a package
 # from the current project’s build tree,
 # i.e. without installing it.
-export(PACKAGE "${EXPORT_NAME}")
+export(PACKAGE "${PROJECT_NAME}")
 
 
 
