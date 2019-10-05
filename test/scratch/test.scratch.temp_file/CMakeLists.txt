@@ -1,10 +1,9 @@
 include_directories (${STLSoft_INCLUDE_DIRS})
 
-if (WIN32)
+if(WIN32)
   add_executable (test.scratch.temp_file test.scratch.temp_file.cpp)
   add_dependencies (test.scratch.temp_file STLSoft)
   target_link_libraries (test.scratch.temp_file xtests.core)
   add_test (test.scratch.temp_file ./test.scratch.temp_file)
-  add_custom_target(tests DEPENDS test.scratch.temp_file)
-endif (WIN32)
+endif()
 
